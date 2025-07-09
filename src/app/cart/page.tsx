@@ -83,74 +83,84 @@ export default function CartPage() {
     <ProtectedRoute>
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
         <Header />
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900">Seu Carrinho</h1>
+        <div className="container mx-auto px-4 py-4 sm:py-8 max-w-7xl">
+          {/* Header do carrinho */}
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
+            <h1 className="text-2xl sm:text-4xl font-bold text-gray-900">Seu Carrinho</h1>
             <button 
               onClick={handleClearCart}
-              className="text-red-600 hover:text-red-700 font-medium px-4 py-2 border border-red-300 rounded-lg hover:bg-red-50 transition-colors duration-200"
+              className="text-red-600 hover:text-red-700 font-medium px-4 py-2 border border-red-300 rounded-lg hover:bg-red-50 transition-colors duration-200 self-start sm:self-auto"
             >
               Limpar Carrinho
             </button>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Lista de itens */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h2 className="text-2xl font-semibold mb-6 text-gray-900">
+              <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gray-900">
                   Itens no Carrinho ({itemCount})
                 </h2>
                 
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {cart.items.map((item) => (
-                    <div key={item.id} className="flex items-center space-x-6 p-6 border border-gray-200 rounded-xl hover:shadow-md transition-shadow duration-200">
-                      <div className="flex-shrink-0">
+                    <div key={item.id} className="flex flex-col sm:flex-row gap-4 p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow duration-200">
+                      {/* Imagem do produto */}
+                      <div className="flex-shrink-0 mx-auto sm:mx-0">
                         <Image
                           src={item.product.image}
                           alt={item.product.title}
                           width={100}
                           height={100}
-                          className="rounded-xl object-contain bg-gray-50 p-2"
+                          className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-contain bg-gray-50 p-2"
                         />
                       </div>
                       
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg text-gray-900 mb-2">{item.product.title}</h3>
-                        <p className="text-gray-500 text-sm mb-3 capitalize">{item.product.category}</p>
-                        <p className="text-blue-600 font-bold text-xl">
+                      {/* Informações do produto */}
+                      <div className="flex-1 text-center sm:text-left">
+                        <h3 className="font-semibold text-lg text-gray-900 mb-2 leading-tight line-clamp-2">
+                          {item.product.title}
+                        </h3>
+                        <p className="text-gray-500 text-sm mb-2 capitalize">{item.product.category}</p>
+                        <p className="text-blue-600 font-bold text-xl mb-4">
                           {formatPrice(item.product.price)}
                         </p>
-                      </div>
-                      
-                      <div className="flex items-center space-x-3">
-                        <button
-                          onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                          className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center font-semibold transition-colors duration-200"
-                        >
-                          -
-                        </button>
-                        <span className="w-12 text-center font-semibold text-lg">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                          className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center font-semibold transition-colors duration-200"
-                        >
-                          +
-                        </button>
-                      </div>
-                      
-                      <div className="text-right">
-                        <p className="font-bold text-xl text-gray-900 mb-3">
-                          {formatPrice(item.product.price * item.quantity)}
-                        </p>
-                        <button
-                          onClick={() => handleRemoveItem(item.id)}
-                          className="text-red-600 hover:text-red-700 font-medium px-4 py-2 border border-red-300 rounded-lg hover:bg-red-50 transition-colors duration-200"
-                        >
-                          Remover
-                        </button>
+                        
+                        {/* Controles em mobile */}
+                        <div className="flex flex-col sm:flex-row items-center gap-4">
+                          {/* Controles de quantidade */}
+                          <div className="flex items-center bg-gray-50 rounded-lg p-2">
+                            <button
+                              onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                              className="w-8 h-8 rounded-full bg-white hover:bg-gray-100 flex items-center justify-center font-semibold transition-colors duration-200 shadow-sm"
+                            >
+                              -
+                            </button>
+                            <span className="w-12 text-center font-semibold text-lg px-2">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                              className="w-8 h-8 rounded-full bg-white hover:bg-gray-100 flex items-center justify-center font-semibold transition-colors duration-200 shadow-sm"
+                            >
+                              +
+                            </button>
+                          </div>
+                          
+                          {/* Total e botão remover */}
+                          <div className="flex flex-col sm:flex-row items-center gap-2">
+                            <p className="font-bold text-xl text-gray-900">
+                              {formatPrice(item.product.price * item.quantity)}
+                            </p>
+                            <button
+                              onClick={() => handleRemoveItem(item.id)}
+                              className="text-red-600 hover:text-red-700 font-medium px-3 py-1 border border-red-300 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm"
+                            >
+                              Remover
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -160,40 +170,52 @@ export default function CartPage() {
 
             {/* Resumo do pedido */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
-                <h2 className="text-2xl font-semibold mb-6 text-gray-900">Resumo do Pedido</h2>
+              <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:sticky lg:top-20">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gray-900">Resumo do Pedido</h2>
                 
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-lg">
+                <div className="space-y-3 sm:space-y-4 mb-6">
+                  <div className="flex justify-between text-base sm:text-lg">
                     <span className="text-gray-600">Subtotal ({itemCount} itens):</span>
                     <span className="font-semibold">{formatPrice(total)}</span>
                   </div>
-                  <div className="flex justify-between text-lg">
+                  <div className="flex justify-between text-base sm:text-lg">
                     <span className="text-gray-600">Frete:</span>
                     <span className="font-semibold text-green-600">Grátis</span>
                   </div>
-                  <div className="border-t pt-4">
-                    <div className="flex justify-between text-2xl font-bold">
+                  <div className="border-t pt-3 sm:pt-4">
+                    <div className="flex justify-between text-xl sm:text-2xl font-bold">
                       <span className="text-gray-900">Total:</span>
                       <span className="text-blue-600">{formatPrice(total)}</span>
                     </div>
                   </div>
                 </div>
 
-                <button
-                  onClick={handleCheckout}
-                  disabled={isLoading}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
-                >
-                  {isLoading ? 'Processando...' : 'Finalizar Compra'}
-                </button>
-                
-                <button
-                  onClick={() => router.push('/')}
-                  className="w-full border border-gray-300 text-gray-700 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors duration-200"
-                >
-                  Continuar Comprando
-                </button>
+                <div className="space-y-3 sm:space-y-4">
+                  <button
+                    onClick={handleCheckout}
+                    disabled={isLoading}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center justify-center">
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processando...
+                      </span>
+                    ) : (
+                      'Finalizar Compra'
+                    )}
+                  </button>
+                  
+                  <button
+                    onClick={() => router.push('/')}
+                    className="w-full border border-gray-300 text-gray-700 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    Continuar Comprando
+                  </button>
+                </div>
               </div>
             </div>
           </div>

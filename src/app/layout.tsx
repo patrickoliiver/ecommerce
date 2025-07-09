@@ -40,6 +40,7 @@ export default function RootLayout({
       <head>
         <title>E-commerce - Loja Online</title>
         <meta name="description" content="Sua loja online favorita com os melhores produtos" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -55,8 +56,10 @@ export default function RootLayout({
                   style: {
                     background: '#363636',
                     color: '#fff',
+                    zIndex: 40,
                   },
                 }}
+                containerClassName="toast-container"
               />
             </CartProvider>
           </AuthProvider>
