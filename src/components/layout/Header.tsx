@@ -45,7 +45,7 @@ const Header = memo(() => {
             >
               <div className="relative w-8 h-8 sm:w-10 sm:h-10 mr-2">
                 <Image
-                  src="https://lunacheckout.com/_next/static/media/logo-light.83a313fc.png"
+                  src="/luna-logo.svg"
                   alt="LunaCheckout Logo"
                   fill
                   className="object-contain"

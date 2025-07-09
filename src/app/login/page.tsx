@@ -72,10 +72,10 @@ export default function LoginPage() {
         <div className="text-center">
           <div className="mx-auto w-24 h-24 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-lg border border-gray-100">
             <Image 
-              src="https://lunacheckout.com/_next/static/media/logo-light.83a313fc.png"
+              src="/luna-logo.svg"
               alt="LunaCheckout"
               width={80}
-              height={80}
+              height={40}
               className="w-20 h-auto"
             />
           </div>
